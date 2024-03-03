@@ -60,6 +60,14 @@ void printFArray(MyArray<T> fArray) {
 	}
 }
 
+template<typename T>
+T* readSliseArray(FILE* fp, int size) {
+	MyArray<T> fileArray;
+	T* arr = new T[size];
+	fread(arr, sizeof(T), size, fp);
+	return arr;
+}
+
 
 
 

@@ -149,5 +149,34 @@ void doBigArray(std::string filename, long long size, int maxSizeArray) {
 	}
 }
 
+template<typename T>
+long long scalar(std::string filename1, std::string filename2, int maxSizeArray) {
+	FILE* fp1 = fopen(filename1.c_str(), "rb");
+	FILE* fp2 = fopen(filename2.c_str(), "rb");
+	T* arr1;
+	T* arr2;
+	long long size1 = readFirstLong(fp1);
+	long long size2 = readFirstLong(fp2);
+	std::cout << size1 << " " << size2;
+	if (size1 != size2) {
+		return -1;
+	}
+	long long answer = 0;
+	int count = size1 / maxSizeArray + 1;
+	long long tempSize = size1;
+	for (int i = 0; i < count; i++) {
+		arr1 = readSliseArray<T>(fp1, fmin(maxSizeArray, tempSize));
+		arr2 = readSliseArray<T>(fp2, fmin(maxSizeArray, tempSize));
+		for (int i = 0; i < fmin(maxSizeArray, tempSize); i++) {
+			answer += arr1[i] * arr2[i];
+		}
+		tempSize -= maxSizeArray;
+		delete arr1;
+		delete arr2;
+		std::cout << i << "/" << count << std::endl;
+	}
+	return answer;
+}
+
 
 
