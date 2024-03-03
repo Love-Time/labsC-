@@ -142,10 +142,14 @@ void doBigArray(std::string filename, long long size, int maxSizeArray) {
 	long long tempSize = size;
 	std::cout << count;
 	for (int i = 0; i<count; i++) {
+		if (tempSize <= 0) {
+			break;
+		}
 		arr = RandomArrayGenerator<T>(fmin(maxSizeArray, tempSize));
 		writeArray(arr, fmin(maxSizeArray, tempSize), fp);
 		tempSize -= maxSizeArray;
 		delete arr;
+		std::cout << i << "/" << count << std::endl;
 	}
 }
 
@@ -165,6 +169,9 @@ long long scalar(std::string filename1, std::string filename2, int maxSizeArray)
 	int count = size1 / maxSizeArray + 1;
 	long long tempSize = size1;
 	for (int i = 0; i < count; i++) {
+		if (tempSize <= 0) {
+			break;
+		}
 		arr1 = readSliseArray<T>(fp1, fmin(maxSizeArray, tempSize));
 		arr2 = readSliseArray<T>(fp2, fmin(maxSizeArray, tempSize));
 		for (int i = 0; i < fmin(maxSizeArray, tempSize); i++) {
